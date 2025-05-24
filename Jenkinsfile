@@ -4,12 +4,12 @@ pipeline{
         stage("stage1"){
             steps{
                 sh "pwd"
-                sh 'echo "stage1-clone'
+                sh 'echo "stage1-clone" '
             }
         }
         stage("test-stage"){
             steps{
-               sh 'echo "test-stage' 
+               sh 'echo "test-stage" ' 
             }
         }
         stage("create-file"){
