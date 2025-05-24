@@ -8,14 +8,26 @@ pipeline{
                 sh 'cat result.html'
             }
         }
-        stage("dockerImageBuild"){
+        stage(dockerLogin){
             steps{
-               sh 'docker -v' 
+                sh 'aws ecr get-login-password --region us-east-1 | \
+                docker login --username AWS --password-stdin 826433291202.dkr.ecr.us-east-1.amazonaws.com'
             }
         }
-        stage("pushImage"){
+        stage("dockerImageBuild"){
             steps{
-                sh 'docker ps'
+               sh 'docker build -t jenkins-ci .' 
+        
+            }
+        }
+        stage("dockerImageTag"){
+            steps{
+                sh 'docker tag jenkins-ci:latest 826433291202.dkr.ecr.us-east-1.amazonaws.com/jenkins-ci:latest'
+            }
+        }
+        stage("dockerPush"){
+            steps{
+                sh 'docker push 826433291202.dkr.ecr.us-east-1.amazonaws.com/jenkins-ci:latest'
             }
         }
 
