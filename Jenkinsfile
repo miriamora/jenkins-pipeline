@@ -5,6 +5,7 @@ pipeline{
             steps{
                 sh "pwd"
                 sh 'echo "stage1-clone" '
+                sh 'uname -r'
             }
         }
         stage("test-stage"){
